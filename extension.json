@@ -1,0 +1,44 @@
+{
+  "name": "injectconsole",
+  "version": "1.0.0",
+  "extension_author": "port of InjectSetConsole",
+  "original_author": "Two Seven One Three",
+  "help": "Spawn a console process and inject shellcode through its STDIN pipe (no VirtualAllocEx/WriteProcessMemory)",
+  "long_help": "Starts an interactive console executable with redirected STDIN/STDOUT, writes a 25-byte marker followed by the supplied shellcode into the child's STDIN, locates that buffer in the child's private committed memory, flips it to RWX and hijacks the main thread RIP. No VirtualAllocEx and no WriteProcessMemory are used.",
+  "commands": [
+    {
+      "command_name": "injectconsole",
+      "help": "Spawn an interactive console exe and inject shellcode via its STDIN pipe",
+      "bof_executor": "reflektor",
+      "entrypoint": "go",
+      "files": [
+        {
+          "os": "windows",
+          "arch": "amd64",
+          "path": "injectconsole.x64.o"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "path",
+          "desc": "Path to an interactive console executable (e.g. C:\\Windows\\System32\\netsh.exe)",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "shellcode",
+          "desc": "File containing the raw shellcode blob (must avoid 0x0a, 0x0d, 0x1a)",
+          "type": "file",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "desc": "Injection method: hijack (default, RIP hijack) or thread (CreateRemoteThread)",
+          "type": "string",
+          "optional": true,
+          "default": "hijack"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "injectconsole-dbg",
+  "version": "1.0.0",
+  "extension_author": "port of InjectSetConsole (debug build)",
+  "original_author": "Two Seven One Three",
+  "help": "Debug build: same as injectconsole, writes stage/timing log to %TEMP%\\injectconsole.log",
+  "long_help": "Identical to injectconsole but compiled with IC_LOG. Progress and timing are appended to %TEMP%\\injectconsole.log on the target, so you can see which stage hung if the BOF never returns.",
+  "commands": [
+    {
+      "command_name": "injectconsole-dbg",
+      "help": "Debug build of injectconsole, logs stages to %TEMP%\\injectconsole.log",
+      "bof_executor": "reflektor",
+      "entrypoint": "go",
+      "files": [
+        {
+          "os": "windows",
+          "arch": "amd64",
+          "path": "injectconsole.x64.o"
+        }
+      ],
+      "arguments": [
+        {
+          "name": "path",
+          "desc": "Path to an interactive console executable (e.g. C:\\Windows\\System32\\netsh.exe)",
+          "type": "string",
+          "optional": false
+        },
+        {
+          "name": "shellcode",
+          "desc": "File containing the raw shellcode blob (must avoid 0x0a, 0x0d, 0x1a)",
+          "type": "file",
+          "optional": false
+        },
+        {
+          "name": "method",
+          "desc": "Injection method: hijack (default, RIP hijack) or thread (CreateRemoteThread)",
+          "type": "string",
+          "optional": true,
+          "default": "hijack"
+        }
+      ]
+    }
+  ]
+}
